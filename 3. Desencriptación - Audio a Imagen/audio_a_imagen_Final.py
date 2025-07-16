@@ -4,12 +4,13 @@ from scipy.signal import stft, windows
 from scipy.io import wavfile
 
 # Cargar el archivo WAV
-fs, audio = wavfile.read("pluto.png.wav")
+fs, audio = wavfile.read("pilares-creacion-2022_lames-webb.jpg.wav")
 
-# Convertir el audio a formato float
+# Convertir el audio a formato float y normalizar
 if audio.dtype != np.float32 and audio.dtype != np.float64:
     audio = audio.astype(np.float32) / np.iinfo(audio.dtype).max
 
+# Definir la longitud de la ventana para el analisis para la STF
 w_length = 1024
 	
 # Aplicar la STFT
@@ -23,3 +24,6 @@ plt.title("Imagen reconstruida desde su audio")
 plt.axis("off")
 plt.tight_layout()
 plt.show()
+
+'''Audio Steganography Project in MATLAB
+https://github.com/hitmansixteen/Audio-Steganography-1/blob/main/README.md'''
