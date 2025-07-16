@@ -1,3 +1,4 @@
+#Librerias 
 import numpy as np
 import matplotlib.pyplot as plt
 import pywt
@@ -20,7 +21,7 @@ if song.ndim > 1:
 data = np.real(audio_image.flatten())
 
 # Con permutacion
-key = 2
+key = 1
 w_length = 1024
 n = len(audio_image)
 rng = np.random.default_rng(key)
@@ -32,7 +33,7 @@ scaled = 40
 n_samples = 3000000
 len_data = len(data_perm)
 
-# Funcion para ocultar los datos en la parte de alta frecuencia usando DWT
+# Funcion para ocultar los datos en la parte de alta frecuencia(cD) usando DWT
 def encryption_dwt(audio, payload, n_samples, len_data, scale):
     audio = audio[:n_samples]
     cA, cD = pywt.dwt(audio, 'db12')
@@ -54,11 +55,17 @@ image_song_perm, steg_old, steg_new_perm = encryption_dwt(
 # Guardar con permutacion
 image_song_norm = image_song_perm / np.max(np.abs(image_song))
 image_song_int16 = (image_song_norm * 32767).astype(np.int16)
-wavfile.write("esteg_con_per.wav", Fs, image_song_int16)
+wavfile.write("esteg_con_clave.wav", Fs, image_song_int16)
 
 # Guardar sin permutacion
 image_song_norm = image_song / np.max(np.abs(image_song))
 image_song_int16 = (image_song_norm * 32767).astype(np.int16)
-wavfile.write("esteg_sin_per.wav", Fs, image_song_int16)
+wavfile.write("esteg_sin_clave.wav", Fs, image_song_int16)
 
 print("se guardaron los archivos esteg_con_per.wav y esteg_sin_per.wav")
+
+'''Codigo base del que se partio:fourier-transform-and-spectrograms.
+https://colab.research.google.com/github/speechbrain/speechbrain/blob/develop/docs/tutorials/preprocessing/fourier-transform-and-spectrograms.ipynb?utm_source=chatgpt.com
+ Garza, B. Readme.org at master · bryangarza/spectre.
+https://github.com/bryangarza/spectre/blob/master/README.org
+ '''
